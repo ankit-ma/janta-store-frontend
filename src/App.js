@@ -1,24 +1,94 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Header from "./common/Header";
+import Footer from "./common/Footer";
+import HomePage from "./pages/HomePage";
+import { Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { username, isLoggedIn } = useSelector((state) => state.session);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage login={true} />} />
+        <Route path="/register" element={<HomePage login={false} />} />
+        <Route
+          path="/dashboard"
+          element={
+            isLoggedIn ? (
+              <Dashboard selected={"dashboard"} />
+            ) : (
+              <HomePage login={false} />
+            )
+          }
+        />
+        <Route
+          path="/billing"
+          element={
+            isLoggedIn ? (
+              <Dashboard selected={"billing"} />
+            ) : (
+              <HomePage login={false} />
+            )
+          }
+        />
+        <Route
+          path="/inventory-management"
+          element={
+            isLoggedIn ? (
+              <Dashboard selected={"inventory management"} />
+            ) : (
+              <HomePage login={false} />
+            )
+          }
+        />
+        <Route
+          path="/customer-directory"
+          element={
+            isLoggedIn ? (
+              <Dashboard selected={"customer directory"} />
+            ) : (
+              <HomePage login={false} />
+            )
+          }
+        />
+        <Route
+          path="/daily-insight"
+          element={
+            isLoggedIn ? (
+              <Dashboard selected={"daily insight"} />
+            ) : (
+              <HomePage login={false} />
+            )
+          }
+        />
+        <Route
+          path="/due-log"
+          element={
+            isLoggedIn ? (
+              <Dashboard selected={"due log"} />
+            ) : (
+              <HomePage login={false} />
+            )
+          }
+        />
+        <Route
+          path="/notification"
+          element={
+            isLoggedIn ? (
+              <Dashboard selected={"notification"} />
+            ) : (
+              <HomePage login={false} />
+            )
+          }
+        />
+      </Routes>
+
+      <Footer />
+    </>
   );
 }
 
