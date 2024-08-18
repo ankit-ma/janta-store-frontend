@@ -9,7 +9,7 @@ const activityreducer = (state = initialState, action) => {
       return {
         ...state,
 
-        activity: action.payload,
+        activity: action.payload.activityData,
       };
 
     default:

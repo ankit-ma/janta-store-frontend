@@ -9,6 +9,8 @@ import Cookies from "js-cookie";
 const api = require("../api/index");
 
 const AuthOverlay = (props) => {
+  const apiURL = process.env.REACT_APP_API_URL;
+
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -33,7 +35,7 @@ const AuthOverlay = (props) => {
 
     await axios
       .post(
-        "http://localhost:8080/authenticate",
+        apiURL + "/authenticate",
         { username, password },
         {
           headers: {
@@ -45,6 +47,7 @@ const AuthOverlay = (props) => {
       .then((response) => {
         Cookies.set("token", response.data.token);
         Cookies.set("loggedIn", true);
+        Cookies.set("employeeId", response.data.employeeId);
         localStorage.setItem("name", response.data.name);
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("activity", response.data.data);

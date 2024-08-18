@@ -1,63 +1,150 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateTotalPrice, updateUser, logout } from "../../redux/action";
+import Loader from "../../UI/Loader";
 
-const CustomerDetails = ({
-  setIsCustomerFound,
-  totalPrice,
-  isCustomerFound,
-}) => {
-  const [customerDetails, setLocalCustomerDetails] = useState({
-    name: "",
-    phoneNumber: "",
-    address: "",
-    due: 0,
-    currentBillAmount: totalPrice,
-    totalAmount: totalPrice,
-  });
-
+const api = require("../../api/index");
+const CustomerDetails = ({ setIsCustomerFound, isCustomerFound }) => {
+  const { customerDetails, totalPrice } = useSelector((state) => state.bills);
+  const dispatch = useDispatch();
+  //   const [customerDetails, setLocalCustomerDetails] = useState({
+  //     customerName: "",
+  //     phoneNumber: "",
+  //     address: "",
+  //     due: 0,
+  //     currentBillAmount: totalPrice,
+  //     totalAmount: totalPrice,
+  //   });
+  const [isLoading, setLoader] = useState(false);
+  const phoneNumberRegex = /^[6-9]\d{9}$/; // checks on 10 input
+  const phoneRegexIncrementally = /^[6-9]{1}\d{0,9}$/; // chekc on each input
   const handlePhoneNumberChange = async (e) => {
     const phoneNumber = e.target.value;
-    setLocalCustomerDetails((prevDetails) => ({ ...prevDetails, phoneNumber }));
-    if (phoneNumber) {
-      // Simulate API call to get customer details
-      const customer = dummyCustomers.find(
-        (cust) => cust.phoneNumber === phoneNumber
-      );
-      if (customer) {
-        setLocalCustomerDetails(customer);
-        setIsCustomerFound(true);
-      } else {
-        setIsCustomerFound(false);
-        setLocalCustomerDetails({
+    if (phoneNumber === "") {
+      //   setLocalCustomerDetails((prevDetails) => ({
+      //     ...prevDetails,
+      //     phoneNumber,
+      //   }));
+      dispatch(
+        updateUser({
           ...customerDetails,
           phoneNumber,
-          currentBillAmount: totalPrice,
-          totalAmount: totalPrice,
-        });
-      }
-    } else {
-      setIsCustomerFound(false);
-      setLocalCustomerDetails({
+        })
+      );
+    }
+    if (!phoneRegexIncrementally.test(phoneNumber)) {
+      return;
+    }
+    dispatch(
+      updateUser({
         ...customerDetails,
         phoneNumber,
-        currentBillAmount: totalPrice,
-        totalAmount: totalPrice,
-      });
+      })
+    );
+    if (phoneNumber.length === 10) {
+      setLoader(true);
+
+      api
+        .searchCustomer(phoneNumber)
+        .then((response) => {
+          if (response.status === 202) {
+            alert("Not exist case: " + response.data);
+            setIsCustomerFound(false);
+            dispatch(
+              updateUser({
+                ...customerDetails,
+                phoneNumber,
+                customerName: "",
+                address: "",
+                currentBillAmount: totalPrice,
+                totalAmount: totalPrice,
+              })
+            );
+            // setLocalCustomerDetails({
+            //   ...customerDetails,
+            //   phoneNumber,
+            //   customerName: "",
+            //   address: "",
+            //   currentBillAmount: totalPrice,
+            //   totalAmount: totalPrice,
+            // });
+            return;
+          }
+          const customer = response.data;
+          console.log(customer);
+          if (customer) {
+            customer["currentBillAmount"] = totalPrice;
+            customer["totalAmount"] = totalPrice;
+            //setLocalCustomerDetails(customer);
+            dispatch(updateUser(customer));
+            setIsCustomerFound(true);
+          } else {
+            setIsCustomerFound(false);
+            dispatch(
+              updateUser({
+                ...customerDetails,
+                phoneNumber,
+                currentBillAmount: totalPrice,
+                totalAmount: totalPrice,
+              })
+            );
+            // setLocalCustomerDetails({
+            //   ...customerDetails,
+            //   phoneNumber,
+            //   currentBillAmount: totalPrice,
+            //   totalAmount: totalPrice,
+            // });
+          }
+        })
+        .catch((e) => {
+          console.log("Error: " + e);
+          alert(e);
+          if (e.response && e.response.status === 401) {
+            dispatch(logout());
+          }
+        });
+      setLoader(false);
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setLocalCustomerDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
+    dispatch(
+      updateUser({
+        ...customerDetails,
+        [name]: value,
+      })
+    );
+    // setLocalCustomerDetails((prevDetails) => ({
+    //   ...prevDetails,
+    //   [customerName]: value,
+    // }));
   };
 
-  const handleRegisterCustomer = () => {
+  const handleRegisterCustomer = async () => {
     // Handle customer registration
-    console.log("Registering customer:", customerDetails);
+    const customer = {
+      customerName: customerDetails.customerName,
+      address: customerDetails.address,
+      phoneNumber: customerDetails.phoneNumber,
+    };
+    console.log("Registering customer:", customer);
+    api
+      .addCustomer(customer)
+      .then((response) => {
+        alert("Customer added succesfully");
+        setIsCustomerFound(true);
+      })
+      .catch((e) => {
+        alert("Error: ", e);
+        if (e.response && e.response.status === 401) {
+          dispatch(logout());
+        }
+      });
   };
-
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <div className="p-4 border-l">
       <h2 className="text-lg font-bold mb-4">Customer Details</h2>
@@ -77,8 +164,8 @@ const CustomerDetails = ({
             <label className="block mb-1">Name</label>
             <input
               type="text"
-              name="name"
-              value={customerDetails.name}
+              name="customerName"
+              value={customerDetails.customerName}
               onChange={handleInputChange}
               className="w-full p-2 border rounded"
             />
@@ -94,10 +181,10 @@ const CustomerDetails = ({
             />
           </div>
           <button
+            className="p-2 bg-blue-500 text-white rounded"
             onClick={handleRegisterCustomer}
-            className="w-full p-2 bg-blue-500 text-white rounded"
           >
-            Register Customer
+            Register
           </button>
         </>
       )}
@@ -107,10 +194,10 @@ const CustomerDetails = ({
             <label className="block mb-1">Name</label>
             <input
               type="text"
-              name="name"
-              value={customerDetails.name}
+              name="customerName"
+              value={customerDetails.customerName}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded "
               readOnly
             />
           </div>

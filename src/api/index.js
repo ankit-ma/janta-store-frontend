@@ -1,8 +1,11 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/action";
+import { useNavigate } from "react-router-dom";
+const apiUrl = process.env.REACT_APP_API_URL;
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: apiUrl,
   // Add any other configuration options here
 });
 
@@ -13,6 +16,7 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  // config.headers["Content-Type"] = "application/json";
   return config;
 });
 
@@ -86,4 +90,28 @@ export const fetchUploadHistory = async (size, pageNumber) => {
       console.error("File upload error", error);
       throw error;
     });
+};
+
+export const searchProduct = async (keyword) => {
+  return api.get(`/solr/search/products/*${keyword}*`);
+};
+
+export const searchCustomer = async (phonenumber) => {
+  const employeeId = Cookies.get("employeeId");
+  return api.get(`/janta-store/add-customer/${employeeId}/${phonenumber}`);
+};
+
+export const addCustomer = async (customer) => {
+  const employeeId = Cookies.get("employeeId");
+  const token = Cookies.get("token");
+  console.log("Addcustomer url", apiUrl);
+  return axios.post(
+    apiUrl + `/janta-store/add-customer/${employeeId}`,
+    customer,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 };

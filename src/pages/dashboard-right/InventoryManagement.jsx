@@ -3,7 +3,9 @@ import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
 
+import { logout } from "../../redux/action";
 import excelPng from "../../resources/excel.png";
 import uploadPng from "../../resources/upload.png";
 import ProductUploadHistory from "./ProductUploadHistory";
@@ -13,6 +15,8 @@ const api = require("../../api/index");
 const InventoryManagement = () => {
   const [isUploading, setIsUploading] = useState(false);
 
+  const dispatch = useDispatch();
+  const apiURL = process.env.REACT_APP_API_URL;
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
     const formData = new FormData();
@@ -21,15 +25,11 @@ const InventoryManagement = () => {
     const token = Cookies.get("token");
     // Replace with your API endpoint
     axios
-      .post(
-        "http://localhost:8080/admin/product/upload-product-list",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post(apiURL + "/admin/product/upload-product-list", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log("File uploaded successfully", response);
         alert(response.data);
@@ -39,6 +39,9 @@ const InventoryManagement = () => {
         console.error("File upload error", error);
         alert(error.response.data);
         setIsUploading(false);
+        if (error.response && error.response.status === 401) {
+          dispatch(logout());
+        }
       });
   };
 
@@ -64,7 +67,7 @@ const InventoryManagement = () => {
             >
               here
             </strong>{" "}
-            to Download template
+            to Download template.
           </p>
         </div>
         <div
@@ -80,8 +83,10 @@ const InventoryManagement = () => {
           {isUploading ? (
             <p>Uploading...</p>
           ) : (
-            <p className="text-blue-500 hover:text-blue-700 whitespace-nowrap overflow-hidden text-ellipsis">
+            <p className="text-black-500 hover:text-blue-700 whitespace-nowrap overflow-hidden text-ellipsis">
               Drag 'n' drop a file here, or click to select a file
+              <br />
+              Supported file formats :: <strong>.xlsx</strong>
             </p>
           )}
         </div>
