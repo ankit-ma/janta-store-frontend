@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTotalPrice, updateUser, logout } from "../../redux/action";
 import Loader from "../../UI/Loader";
+import MyButton from "../../UI/MyButton";
 
 const api = require("../../api/index");
+
 const CustomerDetails = ({ setIsCustomerFound, isCustomerFound }) => {
   const { customerDetails, totalPrice } = useSelector((state) => state.bills);
   const dispatch = useDispatch();
@@ -74,7 +76,10 @@ const CustomerDetails = ({ setIsCustomerFound, isCustomerFound }) => {
           console.log(customer);
           if (customer) {
             customer["currentBillAmount"] = totalPrice;
-            customer["totalAmount"] = totalPrice;
+
+            customer["due"] =
+              customer.dueRecord === null ? 0 : customer.dueRecord.dueAmount;
+            customer["totalAmount"] = totalPrice + customer.due;
             //setLocalCustomerDetails(customer);
             dispatch(updateUser(customer));
             setIsCustomerFound(true);
@@ -146,7 +151,7 @@ const CustomerDetails = ({ setIsCustomerFound, isCustomerFound }) => {
     return <Loader />;
   }
   return (
-    <div className="p-4 border-l">
+    <div className="p-4 border-l  border rounded-xl shadow">
       <h2 className="text-lg font-bold mb-4">Customer Details</h2>
       <div className="mb-4">
         <label className="block mb-1">Phone Number</label>
@@ -155,7 +160,7 @@ const CustomerDetails = ({ setIsCustomerFound, isCustomerFound }) => {
           name="phoneNumber"
           value={customerDetails.phoneNumber}
           onChange={handlePhoneNumberChange}
-          className="w-full p-2 border rounded bg-blue-100 text-blue-700 focus:outline-none focus:bg-blue-200 focus:border-blue-400"
+          className="w-full font-bold p-2 border rounded bg-blue-100 text-blue-700 focus:outline-none focus:bg-blue-200 focus:border-blue-400"
         />
       </div>
       {!isCustomerFound && (
@@ -167,7 +172,7 @@ const CustomerDetails = ({ setIsCustomerFound, isCustomerFound }) => {
               name="customerName"
               value={customerDetails.customerName}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded"
+              className="w-full font-bold  p-2 border-b border-black focus:outline-none"
             />
           </div>
           <div className="mb-4">
@@ -177,15 +182,14 @@ const CustomerDetails = ({ setIsCustomerFound, isCustomerFound }) => {
               name="address"
               value={customerDetails.address}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded"
+              className="w-full text-xs font-bold  p-2 border-b border-black focus:outline-none"
             />
           </div>
-          <button
-            className="p-2 bg-blue-500 text-white rounded"
-            onClick={handleRegisterCustomer}
-          >
-            Register
-          </button>
+
+          <MyButton
+            buttonName={"Register"}
+            buttonHandler={handleRegisterCustomer}
+          />
         </>
       )}
       {isCustomerFound && (
@@ -197,7 +201,7 @@ const CustomerDetails = ({ setIsCustomerFound, isCustomerFound }) => {
               name="customerName"
               value={customerDetails.customerName}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded "
+              className="w-full font-bold p-2 border-b border-black focus:outline-none"
               readOnly
             />
           </div>
@@ -208,40 +212,40 @@ const CustomerDetails = ({ setIsCustomerFound, isCustomerFound }) => {
               name="address"
               value={customerDetails.address}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded"
+              className="w-full text-xs font-bold p-2 border-b border-black focus:outline-none"
               readOnly
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-1">Due</label>
+            <label className="block mb-1">Due (₹)</label>
             <input
               type="number"
               name="due"
               value={customerDetails.due}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded"
+              className="w-full text-red-600 font-bold p-2 border-b border-black focus:outline-none"
               readOnly
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-1">Current Bill Amount</label>
+            <label className="block mb-1">Current Bill Amount (₹)</label>
             <input
               type="number"
               name="currentBillAmount"
               value={customerDetails.currentBillAmount}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded"
+              className="w-full text-green-500 font-bold p-2 border-b border-black focus:outline-none"
               readOnly
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-1">Total Amount</label>
+            <label className="block mb-1">Total Amount (₹)</label>
             <input
               type="number"
               name="totalAmount"
               value={customerDetails.totalAmount}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded"
+              className="w-full font-bold p-2 border-b border-black focus:outline-none"
               readOnly
             />
           </div>
@@ -250,25 +254,5 @@ const CustomerDetails = ({ setIsCustomerFound, isCustomerFound }) => {
     </div>
   );
 };
-
-// Dummy customer data for simulation
-const dummyCustomers = [
-  {
-    phoneNumber: "1234567890",
-    name: "John Doe",
-    address: "123 Elm St",
-    due: 50,
-    currentBillAmount: 100,
-    totalAmount: 150,
-  },
-  {
-    phoneNumber: "0987654321",
-    name: "Jane Smith",
-    address: "456 Oak St",
-    due: 30,
-    currentBillAmount: 60,
-    totalAmount: 90,
-  },
-];
 
 export default CustomerDetails;

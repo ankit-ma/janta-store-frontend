@@ -32,3 +32,8 @@ export const updateProductData = (product) => ({
   type: "PRODUCTUPDATE",
   payload: { product },
 });
+
+export const updateQuantity = (quantity) => ({
+  type: "QUANTITYUPDATE",
+  payload: quantity,
+});

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Pagination from "../../UI/Pagination";
+import { MdOutlineDownloading } from "react-icons/md";
+
 const api = require("../../api/index");
 
 function ProductUploadHistory(props) {
@@ -32,9 +34,9 @@ function ProductUploadHistory(props) {
   return (
     <>
       {historyLoded && (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg py-10">
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-white uppercase bg-green-500 light:bg-gray-700 dark:text-white">
+        <div className="relative overflow-x-auto  sm:rounded-lg py-10">
+          <table className="w-full text-sm text-left rtl:text-right text-[#03045e] font-bold shadow-md">
+            <thead className="text-xs text-white uppercase bg-[#03045e]">
               <tr>
                 <th scope="col" className="px-6 py-3">
                   Request Id
@@ -57,9 +59,7 @@ function ProductUploadHistory(props) {
               {history.map((record, index) => (
                 <tr
                   key={index}
-                  className={`bg-green-${
-                    index % 2 === 0 ? 50 : 100
-                  } border-b light:bg-gray-800 light:border-gray-700 hover:bg-gray-50 light:hover:bg-gray-600`}
+                  className={`bg-white border-b hover:bg-gray-50`}
                 >
                   <td className="px-6 py-4 text-black">{record.id}</td>
                   <td className="px-6 py-4">{record.fileName}</td>
@@ -91,9 +91,9 @@ function ProductUploadHistory(props) {
                     {record.status === "Completed" && (
                       <a
                         href="#"
-                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        className="font-medium text-xl text-blue-600 dark:text-blue-500 hover:underline"
                       >
-                        Download
+                        <MdOutlineDownloading />
                       </a>
                     )}
                   </td>

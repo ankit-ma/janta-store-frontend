@@ -1,11 +1,9 @@
 function MyButton(props) {
+  const classes =
+    "p-2 bg-[#023e8a] hover:bg-[#0077b6] text-white rounded " + props.className;
   return (
     <>
-      <button
-        className="bg-red-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        type="button"
-        onClick={props.buttonHandler}
-      >
+      <button className={classes} type="button" onClick={props.buttonHandler}>
         {props.buttonName}
       </button>
     </>

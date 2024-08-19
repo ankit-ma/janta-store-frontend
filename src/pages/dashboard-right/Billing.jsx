@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import CustomerDetails from "./CustomerDetails";
 import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
+import { TiDelete } from "react-icons/ti";
 import {
   updateProduct,
   updateTotalPrice,
   updateProductData,
   logout,
 } from "../../redux/action";
+import BillingSummary from "./BillingSummary";
+import MyButton from "../../UI/MyButton";
+
 const api = require("../../api/index");
 
 const Billing = () => {
@@ -18,7 +22,8 @@ const Billing = () => {
   const [suggestions, setSuggestions] = useState([]);
   // const [totalPrice, setTotalPrice] = useState(0);
   const [isCustomerFound, setIsCustomerFound] = useState(false);
-  const [showSearchBox, setShowSearchBox] = useState(false);
+  const [showBilingSummay, setShowBillingSummay] = useState(false);
+
   const handleSearchChange = (value) => {
     // const value = e.target.value;
     // setSearchTerm(value);
@@ -40,7 +45,7 @@ const Billing = () => {
       return;
     }
   };
-  const debouncedFetchResults = _.debounce(handleSearchChange, 300);
+  const debouncedFetchResults = _.debounce(handleSearchChange, 200);
 
   // Use useEffect to trigger the debounced function when searchTerm changes
   useEffect(() => {
@@ -70,6 +75,7 @@ const Billing = () => {
       newProduct.discount;
     // setProducts([...products, newProduct]);
     dispatch(updateProduct(newProduct));
+
     calculateTotalPrice([...products, newProduct]);
     setSearchTerm("");
     setSuggestions([]);
@@ -92,6 +98,7 @@ const Billing = () => {
         quantity * product.mrp + product.sgst + product.cgst - product.discount;
       // setProducts(updatedProducts);
       dispatch(updateProductData(updatedProducts));
+
       calculateTotalPrice(updatedProducts);
     } else if (quantity === 0 || isNaN(quantity)) {
       e.target.className = "w-full p-2 border bg-blue-100";
@@ -105,6 +112,7 @@ const Billing = () => {
         quantity * product.mrp + product.sgst + product.cgst - product.discount;
       //  setProducts(updatedProducts);
       dispatch(updateProductData(updatedProducts));
+
       calculateTotalPrice(updatedProducts);
       alert("Available Qauntity is: " + product.availableQuantity);
     }
@@ -131,6 +139,17 @@ const Billing = () => {
     calculateTotalPrice(products);
   };
 
+  const billProceedButtonHandler = () => {
+    if (totalPrice !== 0 && isCustomerFound) {
+      setShowBillingSummay(true);
+    } else {
+      alert("Please Add customer details");
+      setShowBillingSummay(false);
+    }
+  };
+  const closeBilingSummayOverlay = () => {
+    setShowBillingSummay(false);
+  };
   return (
     <div className="container mx-auto p-4 flex gap-8">
       <div className="w-4/5">
@@ -142,10 +161,6 @@ const Billing = () => {
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
-              setShowSearchBox(true);
-            }}
-            onBlur={(e) => {
-              setShowSearchBox(false);
             }}
           />
           {suggestions.length > 0 && (
@@ -164,9 +179,9 @@ const Billing = () => {
             </div>
           )}
         </div>
-        <div className="overflow-x-auto mb-4">
-          <table className="min-w-full bg-white">
-            <thead className="text-xs text-white bg-green-500 light:bg-gray-700 dark:text-white">
+        <div className="max-h-64 overflow-y-auto overflow-x-auto mb-4">
+          <table className="min-w-full bg-white font-bold">
+            <thead className="sticky top-0 text-xs text-white bg-[#03045e] light:bg-gray-700 dark:text-white">
               <tr>
                 <th className="py-2 px-4 border-b"></th>
                 <th className="py-2 px-4 border-b">Sl.No</th>
@@ -182,9 +197,9 @@ const Billing = () => {
             <tbody>
               {products.map((product, index) => (
                 <tr key={index}>
-                  <td className="text-xs py-1 px-2 border-b">
+                  <td className="text-md py-1 px-2 border-b">
                     <button onClick={() => removeProductHandler(index)}>
-                      🔴
+                      <TiDelete className="text-red-500" />
                     </button>
                   </td>
                   <td className="text-xs py-1 px-2 border-b">{index + 1}</td>
@@ -226,12 +241,13 @@ const Billing = () => {
         </div>
         <hr />
         <div className="flex justify-between items-center py-2">
-          <span className="text-xl font-bold">
+          <span className="text-xl font-bold text-[#03045e]">
             Total Price: ₹ {totalPrice.toFixed(2)}
           </span>
-          <button className="p-2 bg-green-500 text-white rounded">
-            Proceed
-          </button>
+          <MyButton
+            buttonName={"Proceed"}
+            buttonHandler={billProceedButtonHandler}
+          />
         </div>
       </div>
       <div className="w-1/5">
@@ -240,6 +256,9 @@ const Billing = () => {
           isCustomerFound={isCustomerFound}
         />
       </div>
+      {showBilingSummay && (
+        <BillingSummary onClose={closeBilingSummayOverlay} />
+      )}
     </div>
   );
 };

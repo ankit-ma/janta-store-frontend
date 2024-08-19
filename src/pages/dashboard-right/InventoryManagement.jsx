@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
-import ReactPaginate from "react-paginate";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
+import { IoArrowBackSharp } from "react-icons/io5";
 
 import { logout } from "../../redux/action";
 import excelPng from "../../resources/excel.png";
@@ -12,7 +12,7 @@ import ProductUploadHistory from "./ProductUploadHistory";
 
 const api = require("../../api/index");
 
-const InventoryManagement = () => {
+const InventoryManagement = (props) => {
   const [isUploading, setIsUploading] = useState(false);
 
   const dispatch = useDispatch();
@@ -52,6 +52,14 @@ const InventoryManagement = () => {
   };
   return (
     <div className="container mx-auto p-4">
+      <button
+        className="flex text-center m-4 cursor-pointer hover:text-[#00b4d8]"
+        onClick={props.hideUpload}
+      >
+        <IoArrowBackSharp className="text-2xl" />
+        <strong className="m-0 pl-2">Back</strong>
+      </button>
+
       <div className="flex space-x-4">
         <div className="flex-1 flex items-center border-dotted border-2 border-green-500 bg-green-100 bg-opacity-50 p-4 text-center cursor-pointer hover:bg-opacity-25 rounded-md">
           <img

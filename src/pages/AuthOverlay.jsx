@@ -73,45 +73,44 @@ const AuthOverlay = (props) => {
   };
   return (
     <>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full">
-          <h2 className="text-2xl font-bold mb-6 text-teal-600">
-            Login / Register
-          </h2>
-          {/* Login and Register Form */}
-          <form onSubmit={loginButtonListener}>
-            <div className="mb-4">
-              <label className="block text-gray-700">Username (Email)</label>
-              <input
-                type="email"
-                name="email"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
-                onChange={onChangeInput}
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Password</label>
-              <input
-                type="password"
-                name="password"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
-                onChange={onChangeInput}
-              />
-            </div>
-            <div className="mb-4">
-              <button
-                type="submit"
-                className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700"
-              >
-                Login
-              </button>
-            </div>
-            <div className="text-center">
-              <Link to="/register">Register</Link>
-            </div>
-          </form>
+      <form
+        onSubmit={loginButtonListener}
+        className="max-w-md mx-auto p-6 bg-white shadow-md rounded-xl shadow"
+      >
+        <h2 className="text-2xl font-bold mb-6 text-[#00b4d8]">
+          Login / Register
+        </h2>
+        <div className="m-6">
+          <label className="block text-gray-700">Username (Email)</label>
+          <input
+            type="email"
+            name="email"
+            className="w-full px-2 py-2 border-b-2 border-blue-500 focus:outline-none"
+            onChange={onChangeInput}
+          />
         </div>
-      </div>
+        <div className="m-6">
+          <label className="block text-gray-700">Password</label>
+          <input
+            type="password"
+            name="password"
+            className="w-full px-2 py-2 border-b-2 border-blue-500 focus:outline-none "
+            onChange={onChangeInput}
+          />
+        </div>
+        <div className="m-6">
+          <button
+            type="submit"
+            className="w-full bg-[#0077b6] text-white py-2 rounded-lg hover:bg-[#00b4d8]"
+          >
+            Login
+          </button>
+        </div>
+        <div className="text-center text-[#0077b6]">
+          <Link to="/register">Register</Link>
+        </div>
+      </form>
+
       {isOpen && (
         <PopupModal
           isOpen={isOpen}

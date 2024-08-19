@@ -115,3 +115,11 @@ export const addCustomer = async (customer) => {
     }
   );
 };
+
+export const generateBillAPi = async (body) => {
+  const employeeId = Cookies.get("employeeId");
+  console.log("Bill body:", body);
+  return api.post(`/bill/generate/${employeeId}`, body, {
+    responseType: "blob", // Important: This tells Axios to treat the response as binary data
+  });
+};
