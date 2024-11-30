@@ -1,8 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
-import { logout } from "../redux/action";
-import { useNavigate } from "react-router-dom";
+
 const apiUrl = process.env.REACT_APP_API_URL;
 const api = axios.create({
   baseURL: apiUrl,
@@ -120,6 +118,19 @@ export const generateBillAPi = async (body) => {
   const employeeId = Cookies.get("employeeId");
   console.log("Bill body:", body);
   return api.post(`/bill/generate/${employeeId}`, body, {
-    responseType: "blob", // Important: This tells Axios to treat the response as binary data
+    responseType: "blob",
   });
+};
+
+export const fetchInventoryDetails = async (size, pageNumber) => {
+  return api
+    .get(`/admin/product/inventry-info/${size}/${pageNumber}`)
+    .then((response) => {
+      console.log("Data fetched", response);
+      return response;
+    })
+    .catch((error) => {
+      console.error("File upload error", error);
+      throw error;
+    });
 };

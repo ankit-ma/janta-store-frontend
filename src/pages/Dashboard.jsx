@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchActivityData } from "../redux/action";
+import { fetchActivityData, logout } from "../redux/action";
 import Loader from "../UI/Loader";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -19,13 +19,19 @@ const Dashboard = (props) => {
   const { activity } = useSelector((state) => state.activities);
 
   const activities = activity;
+  useEffect(() => {
+    if (activities.length === 0) {
+      dispatch(logout());
+    }
+  }, []);
+
   const [loading, setLoading] = useState(false);
   const [activeCss, setActiveCss] = useState("hover:text-[#0077b6]");
 
   return (
     <div className="min-h-screen flex">
       {/* Left Section - Navigator */}
-      <aside className="w-1/5  text-white bg-[#03045e]">
+      <aside className="w-1/7  text-white bg-[#03045e]">
         {/* <h2 className="text-2xl font-bold mb-4 px-2">Navigator</h2> */}
         <nav>
           <ul>
@@ -35,7 +41,7 @@ const Dashboard = (props) => {
                   to={`/${activity.replaceAll(" ", "-").toLowerCase()}`}
                   className="text-[#0077b6]"
                 >
-                  <li key={index} className={`mb-2 text-xl px-4 py-2 bg-white`}>
+                  <li key={index} className={`mb-2 text-m px-4 py-2 bg-white`}>
                     {activity}
                   </li>
                 </Link>
@@ -46,7 +52,7 @@ const Dashboard = (props) => {
                 >
                   <li
                     key={index}
-                    className={`mb-2 px-4 py-2 text-xl hover:bg-white`}
+                    className={`mb-2 px-4 py-2 text-m hover:bg-white`}
                   >
                     {activity}
                   </li>

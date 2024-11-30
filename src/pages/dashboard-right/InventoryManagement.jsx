@@ -23,7 +23,7 @@ const InventoryManagement = (props) => {
     formData.append("file", file);
     setIsUploading(true);
     const token = Cookies.get("token");
-    // Replace with your API endpoint
+
     axios
       .post(apiURL + "/admin/product/upload-product-list", formData, {
         headers: {
