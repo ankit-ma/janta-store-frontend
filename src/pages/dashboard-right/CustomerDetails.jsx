@@ -58,6 +58,7 @@ const CustomerDetails = ({ setIsCustomerFound, isCustomerFound }) => {
                 phoneNumber,
                 customerName: "",
                 address: "",
+                email: "",
                 currentBillAmount: totalPrice,
                 totalAmount: totalPrice,
               })
@@ -132,6 +133,7 @@ const CustomerDetails = ({ setIsCustomerFound, isCustomerFound }) => {
       customerName: customerDetails.customerName,
       address: customerDetails.address,
       phoneNumber: customerDetails.phoneNumber,
+      email: customerDetails.email,
     };
     console.log("Registering customer:", customer);
     api
@@ -181,6 +183,17 @@ const CustomerDetails = ({ setIsCustomerFound, isCustomerFound }) => {
               type="text"
               name="address"
               value={customerDetails.address}
+              onChange={handleInputChange}
+              className="w-full text-xs font-bold  p-2 border-b border-black focus:outline-none"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-1">Email</label>
+            <input
+              type="email"
+              name="email"
+              required
+              value={customerDetails.email}
               onChange={handleInputChange}
               className="w-full text-xs font-bold  p-2 border-b border-black focus:outline-none"
             />

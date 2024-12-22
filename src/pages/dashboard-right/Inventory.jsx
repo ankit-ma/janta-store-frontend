@@ -61,7 +61,7 @@ const Inventory = () => {
             <div className="relative mb-4"></div>
             <div className="max-h-96 overflow-y-auto overflow-x-auto mb-4">
               <table className="min-w-full bg-white ">
-                <thead className="sticky top-0 text-xs text-white bg-[#03045e] light:bg-gray-700 dark:text-white">
+                <thead className="text-left sticky top-0 text-xs text-white bg-[#03045e] light:bg-gray-700 dark:text-white">
                   <tr>
                     <th className="py-2 px-4 border-b">Action</th>
                     <th className="py-2 px-4 border-b">Sl.No</th>
@@ -77,7 +77,7 @@ const Inventory = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="text-center font-mono font-bold">
                   {inventoryLoaded &&
                     products.map((product, index) => (
                       <tr key={index}>
@@ -87,17 +87,17 @@ const Inventory = () => {
                         <td className="text-xs py-1 px-2 border-b">
                           {index + 1}
                         </td>
-                        <td className="text-xs py-1 px-2 border-b">
+                        <td className="text-xs py-1 px-2 border-b text-left text-ellipsis">
                           {product.productName}
                         </td>
-                        <td className="text-xs py-1 px-2 border-b">
+                        <td className="text-xs py-1 px-2 border-b text-left">
                           {product.brandName}
                         </td>
-                        <td className="text-xs py-1 px-2 border-b">
+                        <td className="text-xs py-1 px-2 border-b bg-yellow-200">
                           {product.quantity}
                           <td />
                         </td>
-                        <td className="text-xs py-1 px-2 border-b">
+                        <td className="text-xs py-1 px-2 border-b text-left font-mono bg-slate-200">
                           ₹ {product.mrp}
                         </td>
                         <td className="text-xs py-1 px-2 border-b">

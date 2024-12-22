@@ -13,7 +13,6 @@ import CustomerDirectory from "./dashboard-right/CustomerDirectory";
 import DailyInsight from "./dashboard-right/DailyInsight";
 import DueLog from "./dashboard-right/DueLog";
 import Notification from "./dashboard-right/Notification";
-
 const Dashboard = (props) => {
   const dispatch = useDispatch();
   const { activity } = useSelector((state) => state.activities);
@@ -21,7 +20,9 @@ const Dashboard = (props) => {
   const activities = activity;
   useEffect(() => {
     if (activities.length === 0) {
-      dispatch(logout());
+      // dispatch(logout());
+      const localActivity = localStorage.getItem("activity").split(",");
+      dispatch(fetchActivityData(localActivity));
     }
   }, []);
 
@@ -29,7 +30,7 @@ const Dashboard = (props) => {
   const [activeCss, setActiveCss] = useState("hover:text-[#0077b6]");
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex font-mono">
       {/* Left Section - Navigator */}
       <aside className="w-1/7  text-white bg-[#03045e]">
         {/* <h2 className="text-2xl font-bold mb-4 px-2">Navigator</h2> */}

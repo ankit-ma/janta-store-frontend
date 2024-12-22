@@ -10,7 +10,7 @@ const api = axios.create({
 // Add a request interceptor to automatically include the token in the Authorization header
 api.interceptors.request.use((config) => {
   const token = Cookies.get("token");
-
+  console.log("Token", token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -33,7 +33,7 @@ export const login = async (username, password) => {
       }
     )
     .then((response) => {
-      Cookies.set("token", response.data.token);
+      Cookies.set("token", response.data.token, { expires: 7 });
       localStorage.setItem("name", response.data.name);
       localStorage.setItem("email", response.data.email);
       localStorage.setItem("activity", response.data.data);
@@ -133,4 +133,22 @@ export const fetchInventoryDetails = async (size, pageNumber) => {
       console.error("File upload error", error);
       throw error;
     });
+};
+
+export const fetchCustomerDetailsForDashboard = async (size, pageNumber) => {
+  return api
+    .get(`/janta-store/add-customer/dashboard/${size}/${pageNumber}`)
+    .then((response) => {
+      console.log("Data fetched", response);
+      return response;
+    })
+    .catch((error) => {
+      console.error("File upload error", error);
+      throw error;
+    });
+};
+
+export const sendMail = async (mailType, body) => {
+  console.log("mail body:", body);
+  return api.post(`api/email/send/${mailType}`, body);
 };

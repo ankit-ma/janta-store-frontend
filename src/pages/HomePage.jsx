@@ -3,7 +3,7 @@ import RegisterForm from "./RegisterForm";
 function HomePage(props) {
   return (
     <>
-      <main className="relative bg-gradient-to-r from-[#03045e] to-[#0077b6] h-[90vh] flex items-center justify-center ">
+      <main className="relative bg-gradient-to-r from-[#03045e] to-[#0077b6] h-[90vh] flex items-center justify-center fony-mono">
         {/* Main content */}
 
         <div className="p-8 text-center text-white">

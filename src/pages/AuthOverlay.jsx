@@ -75,38 +75,40 @@ const AuthOverlay = (props) => {
     <>
       <form
         onSubmit={loginButtonListener}
-        className="max-w-md mx-auto p-6 bg-white shadow-md rounded-xl shadow"
+        className="max-w-md mx-auto p-4 bg-white shadow-md rounded-xl"
       >
-        <h2 className="text-2xl font-bold mb-6 text-[#00b4d8]">
+        <h2 className="text-xl font-bold mb-6 text-[#03055ec8]">
           Login / Register
         </h2>
         <div className="m-6">
-          <label className="block text-gray-700">Username (Email)</label>
+          <label className="text-xs block text-gray-700">
+            Username (Email)
+          </label>
           <input
             type="email"
             name="email"
-            className="w-full px-2 py-2 border-b-2 border-blue-500 focus:outline-none"
+            className="w-full px-2 border-b-2 border-blue-500 focus:outline-none text-xs font-mono"
             onChange={onChangeInput}
           />
         </div>
         <div className="m-6">
-          <label className="block text-gray-700">Password</label>
+          <label className="block text-gray-700 text-xs">Password</label>
           <input
             type="password"
             name="password"
-            className="w-full px-2 py-2 border-b-2 border-blue-500 focus:outline-none "
+            className="w-full px-2 py-2 border-b-2 border-blue-500 focus:outline-none text-xs"
             onChange={onChangeInput}
           />
         </div>
         <div className="m-6">
           <button
             type="submit"
-            className="w-full bg-[#0077b6] text-white py-2 rounded-lg hover:bg-[#00b4d8]"
+            className="w-full bg-[#0077b6] text-white py-2 rounded-lg hover:bg-[#00b4d8] text-xs"
           >
             Login
           </button>
         </div>
-        <div className="text-center text-[#0077b6]">
+        <div className="text-center text-[#0015b6] text-xs">
           <Link to="/register">Register</Link>
         </div>
       </form>

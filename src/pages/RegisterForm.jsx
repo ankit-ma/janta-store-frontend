@@ -87,9 +87,9 @@ const RegisterForm = () => {
         onSubmit={handleSubmit}
         className="max-w-md mx-auto p-4 bg-white shadow-md rounded-xl"
       >
-        <h2 className="text-2xl font-bold mb-4 text-[#00b4d8]">Register</h2>
+        <h2 className="text-xl font-bold mb-4 text-[#00b4d8]">Register</h2>
 
-        <div className="grid grid-cols-1 mt-2 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 mt-2 md:grid-cols-2 gap-4 text-xs">
           <div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Name</label>
@@ -192,7 +192,7 @@ const RegisterForm = () => {
         </div>
         <button
           type="submit"
-          className="w-full bg-[#0077b6] text-white py-2 rounded hover:bg-[#00b4d8]"
+          className="w-full bg-[#0077b6] text-white py-2 rounded hover:bg-[#00b4d8] text-xs"
         >
           Register
         </button>

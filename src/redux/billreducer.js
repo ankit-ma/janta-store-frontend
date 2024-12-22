@@ -3,6 +3,7 @@ const initialState = {
     customerName: "",
     phoneNumber: "",
     address: "",
+    email: "",
     due: 0,
     currentBillAmount: 0,
     totalAmount: 0,

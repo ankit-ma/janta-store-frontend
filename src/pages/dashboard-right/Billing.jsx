@@ -151,7 +151,7 @@ const Billing = () => {
     setShowBillingSummay(false);
   };
   return (
-    <div className="container mx-auto p-4 flex gap-8">
+    <div className="container mx-auto p-4 flex gap-8 font-mono">
       <div className="w-4/5">
         <div className="relative mb-4">
           <input
@@ -161,6 +161,11 @@ const Billing = () => {
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
+            }}
+            onClick={(e) => {
+              if (e.target.value === "") {
+                setSearchTerm("*");
+              }
             }}
           />
           {suggestions.length > 0 && (

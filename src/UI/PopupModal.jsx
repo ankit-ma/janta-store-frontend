@@ -22,7 +22,7 @@ const PopupModal = ({ isOpen, onClose, title, message, type }) => {
 
       {/* Modal */}
       <div
-        className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white p-6 rounded shadow-lg ${
+        className={`fixed top-1/2 left-1/2 min-w-96 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white p-6 rounded shadow-lg ${
           modalOpen ? "block" : "hidden"
         }`}
       >
@@ -46,7 +46,9 @@ const PopupModal = ({ isOpen, onClose, title, message, type }) => {
               {message}
             </div>
           ) : (
-            <div>{message}</div>
+            <div className="bg-green-100 text-green-900 p-2 rounded">
+              {message}
+            </div>
           )}
         </div>
 
