@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 import DashboardRight from "./dashboard-right/DashboardRight";
 import Billing from "./dashboard-right/Billing";
-import InventoryManagement from "./dashboard-right/InventoryManagement";
 import Inventory from "./dashboard-right/Inventory";
 import CustomerDirectory from "./dashboard-right/CustomerDirectory";
 import DailyInsight from "./dashboard-right/DailyInsight";
@@ -32,9 +31,9 @@ const Dashboard = (props) => {
   return (
     <div className="min-h-screen flex font-mono">
       {/* Left Section - Navigator */}
-      <aside className="w-1/7  text-white bg-[#03045e]">
+      <aside className="w-1/7  text-white bg-[#03045e] p-3">
         {/* <h2 className="text-2xl font-bold mb-4 px-2">Navigator</h2> */}
-        <nav>
+        <nav className="">
           <ul>
             {activities.map((activity, index) =>
               props.selected === activity.toLowerCase() ? (
@@ -42,7 +41,10 @@ const Dashboard = (props) => {
                   to={`/${activity.replaceAll(" ", "-").toLowerCase()}`}
                   className="text-[#0077b6]"
                 >
-                  <li key={index} className={`mb-2 text-m px-4 py-2 bg-white`}>
+                  <li
+                    key={index}
+                    className={`mb-4 text-m px-4 py-2 bg-blue-200 text-black rounded-xl shadow-md hover:shadow-lg transition-all`}
+                  >
                     {activity}
                   </li>
                 </Link>
@@ -53,7 +55,7 @@ const Dashboard = (props) => {
                 >
                   <li
                     key={index}
-                    className={`mb-2 px-4 py-2 text-m hover:bg-white`}
+                    className={`mb-4 px-4 py-2 text-m hover:rounded-xl hover:shadow-lg hover:bg-blue-50 transition-all`}
                   >
                     {activity}
                   </li>

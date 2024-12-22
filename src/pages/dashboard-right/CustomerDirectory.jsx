@@ -11,7 +11,7 @@ function CustomerDirectory(props) {
   const [customerDetails, setCustomerDetails] = useState([]);
   const [totalPage, setTotalPage] = useState(1);
   const [pageNumber, setPageNumber] = useState(0);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [isOpen, setIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("Something went wrong");
   const [isLoading, setIsLoading] = useState(false);
