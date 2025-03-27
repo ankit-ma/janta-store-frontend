@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import AlertModal from "../UI/AlertModal";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -19,19 +19,21 @@ const RegisterForm = () => {
   const [registered, setRegistered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("Alert hojao");
-
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setIsModalOpen(false);
-    if (registered) navigate("/");
+    if (registered) navigate("/store");
   };
   const handleChange = (e) => {
     setErrors({});
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
   const validate = () => {
     const newErrors = {};
 
@@ -85,13 +87,13 @@ const RegisterForm = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="max-w-md mx-auto p-4 bg-white shadow-md rounded-xl"
+        className="max-w-md mx-auto p-6 bg-white shadow-[#6366fcd0] shadow-2xl rounded-xl transition-all duration-300 ease-in-out transform hover:shadow-blue-500 hover:rotate-2"
       >
-        <h2 className="text-xl font-bold mb-4 text-[#00b4d8]">Register</h2>
+        <h2 className="text-xl font-bold mb-4 text-[#474affd0]">Register</h2>
 
-        <div className="grid grid-cols-1 mt-2 md:grid-cols-2 gap-4 text-xs">
+        <div className="grid grid-cols-1 mt-2 md:grid-cols-2 gap-4 text-xs font-mono">
           <div>
-            <div className="mb-4">
+            <div className="mb-4 min-w-48">
               <label className="block text-gray-700 mb-2">Name</label>
               <input
                 type="text"
@@ -101,9 +103,7 @@ const RegisterForm = () => {
                 className="w-full px-3 py-2 border-b-2 border-blue-500 focus:outline-none"
               />
               {errors.employeeName && (
-                <span className="text-red-500 text-sm">
-                  {errors.employeeName}
-                </span>
+                <span className="text-red-500">{errors.employeeName}</span>
               )}
             </div>
             <div className="mb-4">
@@ -116,7 +116,7 @@ const RegisterForm = () => {
                 className="w-full px-3 py-2 border-b-2 border-blue-500 focus:outline-none"
               />
               {errors.email && (
-                <span className="text-red-500 text-sm">{errors.email}</span>
+                <span className="text-red-500">{errors.email}</span>
               )}
             </div>
             <div className="mb-4">
@@ -134,9 +134,7 @@ const RegisterForm = () => {
                 <option value="cashier">Cashier</option>
               </select>
               {errors.designation && (
-                <span className="text-red-500 text-sm">
-                  {errors.designation}
-                </span>
+                <span className="text-red-500">{errors.designation}</span>
               )}
             </div>
           </div>
@@ -151,23 +149,27 @@ const RegisterForm = () => {
                 className="w-full px-3 py-2 border-b-2 border-blue-500 focus:outline-none"
               />
               {errors.phoneNumber && (
-                <span className="text-red-500 text-sm">
-                  {errors.phoneNumber}
-                </span>
+                <span className="text-red-500">{errors.phoneNumber}</span>
               )}
             </div>
-            <div className="mb-4">
+            <div className="mb-4 relative">
               <label className="block text-gray-700 mb-2">Password</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border-b-2 border-blue-500 focus:outline-none"
               />
-
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute pb-2 right-2 top-8 text-gray-500 focus:outline-none"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
               {errors.password && (
-                <span className="text-red-500 text-sm">{errors.password}</span>
+                <span className="text-red-500">{errors.password}</span>
               )}
             </div>
             <div className="mb-4">
@@ -183,9 +185,7 @@ const RegisterForm = () => {
               />
 
               {errors.confirmPassword && (
-                <span className="text-red-500 text-sm">
-                  {errors.confirmPassword}
-                </span>
+                <span className="text-red-500">{errors.confirmPassword}</span>
               )}
             </div>
           </div>

@@ -152,3 +152,13 @@ export const sendMail = async (mailType, body) => {
   console.log("mail body:", body);
   return api.post(`api/email/send/${mailType}`, body);
 };
+
+export const fetchDashboardDetails = async () => {
+  return api
+    .get("/janta-store/dashboard/details")
+    .then((response) => response)
+    .catch((error) => {
+      console.error("Data Fetch error", error);
+      throw error;
+    });
+};

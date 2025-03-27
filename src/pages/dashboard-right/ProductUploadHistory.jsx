@@ -35,10 +35,10 @@ function ProductUploadHistory(props) {
     <>
       {historyLoded && (
         <div className="relative overflow-x-auto  sm:rounded-lg py-10">
-          <table className="w-full text-sm text-left rtl:text-right text-[#03045e] font-bold shadow-md">
-            <thead className="text-xs text-white uppercase bg-[#03045e]">
+          <table className="w-full text-sm text-left rtl:text-right text-[#03045e] font-bold font-mono shadow-md">
+            <thead className="text-xs text-white uppercase bg-[#6366fcd0]">
               <tr>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 rounded-tl-xl">
                   Request Id
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -50,7 +50,7 @@ function ProductUploadHistory(props) {
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 rounded-tr-xl">
                   Action
                 </th>
               </tr>

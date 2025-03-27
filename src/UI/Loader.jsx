@@ -1,11 +1,11 @@
 import React from "react";
 import "./Loader.css";
-import { SquareLoader } from "react-spinners";
+import { RingLoader } from "react-spinners";
 
 const Loader = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen z-1000">
-      <SquareLoader color="#99adf3" />
+    <div className="fixed inset-0 bg-gray-200 bg-opacity-50 flex items-center justify-center z-50 rounded-lg">
+      <RingLoader color="#0c9f26" />
     </div>
   );
 };

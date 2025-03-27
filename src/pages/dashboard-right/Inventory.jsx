@@ -60,10 +60,10 @@ const Inventory = () => {
           <div className="">
             <div className="relative mb-4"></div>
             <div className="max-h-96 overflow-y-auto overflow-x-auto mb-4">
-              <table className="min-w-full bg-white ">
-                <thead className="text-left sticky top-0 text-xs text-white bg-[#03045e] light:bg-gray-700 dark:text-white">
+              <table className="min-w-full bg-white">
+                <thead className="text-left sticky top-0 text-xs text-white bg-[#6366fcd0] light:bg-gray-700 dark:text-white rounded-t-xl">
                   <tr>
-                    <th className="py-2 px-4 border-b">Action</th>
+                    <th className="py-2 px-4 border-b rounded-tl-xl">Action</th>
                     <th className="py-2 px-4 border-b">Sl.No</th>
                     <th className="py-2 px-4 border-b">Product Name</th>
                     <th className="py-2 px-4 border-b">Brand Name</th>
@@ -72,7 +72,7 @@ const Inventory = () => {
                     <th className="py-2 px-4 border-b">SGST(%)</th>
                     <th className="py-2 px-4 border-b">CGST(%)</th>
                     <th className="py-2 px-4 border-b">Discount(%)</th>
-                    <th className="py-2 px-4 border-b">
+                    <th className="py-2 px-4 border-b rounded-tr-xl">
                       Additional Information{" "}
                     </th>
                   </tr>
@@ -109,8 +109,8 @@ const Inventory = () => {
                         <td className="text-xs py-1 px-2 border-b">
                           {product.discount}%
                         </td>
-                        <td className="text-xs py-1 px-2 border-b">
-                          {product.additionalInformation}
+                        <td className="text-xs py-1 px-2 border-b text-left">
+                          {product.additionalInfo}
                         </td>
                       </tr>
                     ))}

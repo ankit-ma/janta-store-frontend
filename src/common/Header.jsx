@@ -4,6 +4,7 @@ import { logout } from "../redux/action";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { IoLogOutSharp } from "react-icons/io5";
+import { RxAvatar } from "react-icons/rx";
 function Header() {
   const dispatch = useDispatch();
   const { isLoggedIn, username } = useSelector((state) => state.session);
@@ -13,7 +14,7 @@ function Header() {
   };
   return (
     <>
-      <nav className="flex items-center justify-between flex-wrap bg-gradient-to-r from-[#03045e] to-[#0077b6] h-[7vh]">
+      <nav className="flex items-center justify-between flex-wrap bg-gradient-to-r to-[#6366fcd0] from-[#9e9ff6d0] h-[7vh]">
         <div className="flex items-center justify-center flex-grow text-white">
           <Link to={isLoggedIn ? "/dashboard" : "/"}>
             <span className="font-semibold text-xl tracking-tight">
@@ -23,11 +24,12 @@ function Header() {
           </Link>
         </div>
         <div className="flex items-center justify-between">
-          <p className="text-white text-xl bold m-2">{username}</p>
+          {isLoggedIn && <RxAvatar className="text-xl text-white" />}
+          <p className="text-white text-lg bold m-2">{username}</p>
           {isLoggedIn && (
             <div className="relative group">
               <button
-                className="text-2xl hover:bg-red-800 text-white hover:text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="text-2xl hover:bg-red-800 text-black hover:text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
                 onClick={logoutHandler}
               >

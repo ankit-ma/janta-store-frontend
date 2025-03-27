@@ -73,39 +73,38 @@ function CustomerDirectory(props) {
       <h2 className="text-2xl font-bold mb-4">Customer Directory</h2>
       <hr />
       {isLoading && <Loader />}
-      {!isLoading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-10">
-          {customerDetails.map((customer) => {
-            const date = new Date(customer.lastBilledDate);
-            return (
-              <div
-                key={customer.id}
-                className="bg-blue-50 text-[#343A40] p-4 shadow rounded-xl font-mono max-w-50 text-ellipsis"
-              >
-                <RxAvatar className="text-6xl text-[#007BFF]" />
-                <h2 className="font-bold text-[#8E44AD]">
-                  {customer.customerName}
-                </h2>
-                <p className="text-sm ">
-                  <strong>Contact no. : </strong>+91-{" "}
-                  <a href="tel">{customer.phoneNumber}</a>
-                </p>
-                <p className="text-sm text-red-500">
-                  <strong>Due: </strong>₹ {customer.dueAmount}
-                </p>
-                <p className="text-sm">
-                  <strong>Address: </strong> {customer.address.toLowerCase()}
-                </p>
-                <p className="text-sm">
-                  <strong>Last Billed Date: </strong>
-                  {customer.lastBilledDate
-                    ? formatter.format(date)
-                    : "--:--:--"}
-                </p>
-                <p className="text-sm">
-                  <strong>Total bills: </strong>
-                  {customer.bills}
-                </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-10 overflow-auto max-h-96">
+        {customerDetails.map((customer) => {
+          const date = new Date(customer.lastBilledDate);
+          return (
+            <div
+              key={customer.id}
+              className="bg-blue-50 text-[#343A40] p-4 shadow rounded-xl font-mono max-w-50 text-ellipsis"
+            >
+              <RxAvatar className="text-4xl text-[#007BFF]" />
+              <h2 className="font-bold text-[#8E44AD]">
+                {customer.customerName}
+              </h2>
+              <p className="text-xs ">
+                <strong>Contact no. : </strong>+91-{" "}
+                <a href="tel">{customer.phoneNumber}</a>
+              </p>
+              <p className="text-xs text-red-500">
+                <strong>Due: </strong>₹ {customer.dueAmount}
+              </p>
+              <p className="text-xs">
+                <strong>Address: </strong> {customer.address.toLowerCase()}
+              </p>
+              <p className="text-xs">
+                <strong>Last Billed Date: </strong>
+                {customer.lastBilledDate ? formatter.format(date) : "--:--:--"}
+              </p>
+              <p className="text-xs">
+                <strong>Total bills: </strong>
+                {customer.bills}
+              </p>
+              <div>
                 <FaBell
                   className="text-2xl cursor-pointer pt-2"
                   onClick={(e) =>
@@ -117,10 +116,11 @@ function CustomerDirectory(props) {
                   }
                 />
               </div>
-            );
-          })}
-        </div>
-      )}
+            </div>
+          );
+        })}
+      </div>
+
       <Pagination
         currentPage={pageNumber}
         totalPages={totalPage}
@@ -135,7 +135,6 @@ function CustomerDirectory(props) {
           type="success"
         />
       )}
-      {isLoading && <Loader />}
     </>
   );
 }

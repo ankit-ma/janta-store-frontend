@@ -60,7 +60,7 @@ const InventoryManagement = (props) => {
         <strong className="m-0 pl-2">Back</strong>
       </button>
 
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 font-mono">
         <div className="flex-1 flex items-center border-dotted border-2 border-green-500 bg-green-100 bg-opacity-50 p-4 text-center cursor-pointer hover:bg-opacity-25 rounded-md">
           <img
             src={excelPng}
