@@ -74,7 +74,7 @@ function CustomerDirectory(props) {
       <hr />
       {isLoading && <Loader />}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-10 overflow-auto max-h-96">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-10 overflow-auto min-h-96">
         {customerDetails.map((customer) => {
           const date = new Date(customer.lastBilledDate);
           return (

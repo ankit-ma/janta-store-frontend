@@ -125,24 +125,24 @@ function DashboardRight(props) {
                 />
               )}
             </div>
-            <div className="p-4 bg-white shadow-md rounded-lg">
+            {/* <div className="p-4 bg-white shadow-md rounded-lg">
               <h3 className="text-xl p-2 font-bold text-gray-500 border-b-2 border-dotted border-[#6366fcd0]">
                 Customer Interaction
               </h3>
-              {/* Add customer interaction content */}
+              
             </div>
             <div className="p-4 bg-white shadow-md rounded-lg">
               <h3 className="text-xl font-bold text-yellow-500">
                 Finance Overview
               </h3>
-              {/* Add finance overview content */}
+              
             </div>
             <div className="p-4 bg-white shadow-md rounded-lg">
               <h3 className="text-xl font-bold text-yellow-500">
                 Employee Overview
               </h3>
-              {/* Add employee overview content */}
-            </div>
+              
+            </div> */}
           </div>
         </div>
       </div>

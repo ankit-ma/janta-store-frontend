@@ -77,9 +77,9 @@ const Dashboard = (props) => {
         {props.selected === "billing" && <Billing />}
         {props.selected === "inventory management" && <Inventory />}
         {props.selected === "customer directory" && <CustomerDirectory />}
-        {props.selected === "staff management" && <StaffManagement />}
+        {/* {props.selected === "staff management" && <StaffManagement />} */}
         {props.selected === "due log" && <DueLog />}
-        {props.selected === "notification" && <Notification />}
+        {/* {props.selected === "notification" && <Notification />} */}
       </main>
     </div>
   );

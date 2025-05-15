@@ -162,3 +162,12 @@ export const fetchDashboardDetails = async () => {
       throw error;
     });
 };
+export const fetchDueRecords = async () => {
+  return api
+    .get("/janta-store/due/all")
+    .then((response) => response)
+    .catch((error) => {
+      console.error("Data Fetch error", error);
+      throw error;
+    });
+};
